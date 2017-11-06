@@ -5,13 +5,15 @@ Data can be formatted as such using im2rec.py as released by MXNet
 Modeled off of code from https://mxnet.incubator.apache.org/how_to/finetune.html
 '''
 
+os.chdir('~/Deformable-ConvNets/rfcn')
+
 import mxnet as mx
 import os
 import cv2
 from config.config import config, update_config
 import numpy as np
 
-os.chdir('~/Deformable-ConvNets/rfcn')
+
 
 def get_iterators(batch_size, data_shape=(3, 224, 224)):
     train = mx.io.ImageRecordIter(
@@ -36,15 +38,18 @@ def get_iterators(batch_size, data_shape=(3, 224, 224)):
 pprint.pprint(config)
 config.symbol = 'resnet_v1_101_rfcn_dcn'
 sym_instance = eval(config.symbol + '.' + config.symbol)()
-sym = sym_instance.get_symbol(config, is_train=False)
+sym = sym_instance.get_symbol(config, is_train=True)
 
-def get_fine_tune_model(symbol, arg_params, num_classes, layer_name='flatten0'):
+def get_fine_tune_model(symbol, arg_params, num_classes, layer_names=['cls_prob_reshape', 'rpn_cls_prob'):
     all_layers = symbol.get_internals()
-    net = all_layers[layer_name+'_output']
-    net = mx.symbol.FullyConnected(data=net, num_hidden=num_classes, name='fc1')
-    net = mx.symbol.SoftmaxOutput(data=net, name='softmax')
+    net1 = all_layers[layer_names[0]+'_output']
+    net2 = all_layers[layer_names[1]+'_output']
+    # net = mx.symbol.FullyConnected(data=net, num_hidden=num_classes, name='fc1')
+    net1 = mx.symbol.SoftmaxOutput(data=net1, name='softmax_cls')
+    net2 = mx.symbol.SoftmaxOutput(data=net2, name='softmax_rpn')
     new_args = dict({k:arg_params[k] for k in arg_params if 'fc1' not in k})
-    return (net, new_args)
+    group = mx.sym.Group([net1, net2])
+    return (group, new_args)
 
 def fit(symbol, arg_params, aux_params, train, val, batch_size, num_gpus):
     devs = [mx.gpu(i) for i in range(num_gpus)]
@@ -63,6 +68,7 @@ def fit(symbol, arg_params, aux_params, train, val, batch_size, num_gpus):
     metric = mx.metric.Accuracy()
     return mod.score(val, metric)
 
+arg_params, aux_params = load_param(cur_path + '/../model/' + ('rfcn_dcn_coco' if not args.rfcn_only else 'rfcn_coco'), 0, process=True)
 (new_sym, new_args) = get_fine_tune_model(sym, arg_params, num_classes)
 batch_size = 32
 (train, val) = get_iterators(batch_size)
