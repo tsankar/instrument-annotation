@@ -10,7 +10,11 @@ import tarfile
 import os
 import shutil
 
+<<<<<<< HEAD
 def download_imagenet(PATH_PREF='/home/tharun/data'):
+=======
+def download_imagenet(PATH_PREF=''):
+>>>>>>> 79d620b00e3ce72144ccd1a301b54c8b3a187165
     os.chdir(PATH_PREF)
 
     IMAGE_PATH = os.path.join(PATH_PREF, 'Images')
@@ -20,7 +24,11 @@ def download_imagenet(PATH_PREF='/home/tharun/data'):
     if not os.path.exists(ANNO_PATH):
         os.makedirs(ANNO_PATH)
 
+<<<<<<< HEAD
     synsets = ['n00007846', 'n03467517', 'n02804123', 'n02676566', 'n03272010', 'n03499907', 'n03249569', 'n04249415']
+=======
+    synsets = ['n03467517', 'n02804123', 'n02676566', 'n03272010', 'n03499907', 'n03249569', 'n04249415']
+>>>>>>> 79d620b00e3ce72144ccd1a301b54c8b3a187165
     for elm in synsets:
         im_path = os.path.join(IMAGE_PATH, elm + '.tar')
 
@@ -55,7 +63,11 @@ def download_imagenet(PATH_PREF='/home/tharun/data'):
 
         tar.close()
 
+<<<<<<< HEAD
 def move_images(PATH_PREF='/home/tharun/data', dest='/home/tharun/data/ILSVRC'):
+=======
+def move_images(PATH_PREF='', dest='/home/tharun/data/ILSVRC'):
+>>>>>>> 79d620b00e3ce72144ccd1a301b54c8b3a187165
     IMAGE_PATH = os.path.join(PATH_PREF, 'Images')
     ANNO_PATH = os.path.join(PATH_PREF, 'Annotations')
 
@@ -72,6 +84,7 @@ def move_images(PATH_PREF='/home/tharun/data', dest='/home/tharun/data/ILSVRC'):
     for folder in dirs:
         for im in os.listdir(os.path.join(ANNO_PATH, folder, 'Annotation', folder)):
             shutil.copy(os.path.join(ANNO_PATH, folder, 'Annotation', folder, im), dest_annopath)
+<<<<<<< HEAD
 
 def create_imgsets():
     ROOT_DIR = '/home/tharun/data/ILSVRC/ImageSets/DET'
@@ -93,3 +106,5 @@ def inspect_xmls():
         e = xml.etree.ElementTree.parse(os.path.join(ANNO_DIR, f)).getroot()
         for obj in e.findall('object'):
             print obj.find('name').text + '|'
+=======
+>>>>>>> 79d620b00e3ce72144ccd1a301b54c8b3a187165
