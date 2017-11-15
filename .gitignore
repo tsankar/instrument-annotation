@@ -1,3 +1,4 @@
 *.tar
 n03467517/
 output/
+*.pyc
