@@ -15,11 +15,11 @@ class SSDDetect:
         self.def_path = def_path
         self.labelmap_path = labelmap_path
 
-        expected_hash = ''
+        # expected_hash = ''
         #TODO: versioning
-        if not validate_file(weights_path, expected_hash):
-            # TODO: Download correct weights
-            weights_path = ''
+        # if not validate_file(weights_path, expected_hash):
+        #     # TODO: Download correct weights
+        #     weights_path = ''
 
         self.weights_path = weights_path
 
@@ -101,7 +101,7 @@ class SSDDetect:
 
 
     # TODO: adjust for image batches? - determine whether necessary
-    def detect(self, image_path, batch_size=1):
+    def detect(self, image, batch_size=1):
         f = open(self.labelmap_path, 'r')
         labelmap = caffe_pb2.LabelMap()
         text_format.Merge(str(file.read()), labelmap)
@@ -120,7 +120,7 @@ class SSDDetect:
 
         image_resize = 300
         net.blobs['data'].reshape(batch_size, 3, image_resize, image_resize)
-        image = caffe.io.load_image(image_path)
+        # image = caffe.io.load_image(image_path)
 
         transformed_image = transformer.preprocess('data', image)
         net.blobs['data'].data[...] = transformed_image
@@ -164,7 +164,16 @@ class SSDDetect:
 
         return boxes
 
+    def detect_vid(self, frames):
+        '''
+        frames: numpy array (of RGB images) of shape
+            (number of frames, height, width, channels)
+        '''
+        box_sets = []
+        for im in frames:
+            boxes = self.detect(im)
+            box_sets.append(boxes)
+
     # TODO: determine whether this is necessary
     def detect_batches(self, image_dir, batch_size):
-        # TODO
         pass

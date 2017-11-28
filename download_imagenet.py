@@ -75,15 +75,48 @@ def move_images(PATH_PREF='/home/tharun/data', dest='/home/tharun/data/ILSVRC'):
 
 def create_imgsets():
     ROOT_DIR = '/home/tharun/data/ILSVRC/ImageSets/DET'
-    DATA_DIR = '/home/tharun/data/ILSVRC/Data/DET/train'
+    for d in ['val']: # 'train', 'val', 'test'
+        DATA_DIR = os.path.join('/home/tharun/data/ILSVRC/Annotations/DET/', d)
 
-    f = open(os.path.join(ROOT_DIR, 'train.txt'), 'w')
-    i = 1
-    for im in os.listdir(DATA_DIR):
-        f.write(im.strip('.JPEG') + ' ' + str(i) + '\n')
+        f = open(os.path.join(ROOT_DIR, d + '.txt'), 'w')
+        i = 1
+        for im in os.listdir(DATA_DIR):
+            f.write(im.strip('.xml') + ' ' + str(i) + '\n')
+            i += 1
+
+        f.close()
+
+def split_data():
+    ROOT = '/home/tharun/data/ILSVRC/Data/DET/'
+    ims = os.listdir(os.path.join(ROOT, 'train'))
+    num = len(ims)
+    test_split = 0.1 * num
+    val_split = 0.3 * num
+    i = 0
+    while i < test_split:
+        im = ims[i]
+        shutil.move(os.path.join(ROOT, 'train', im), os.path.join(ROOT, 'test', im))
         i += 1
 
-    f.close()
+    while i < val_split:
+        im = ims[i]
+        shutil.move(os.path.join(ROOT, 'train', im), os.path.join(ROOT, 'val', im))
+        i += 1
+
+    split_annos()
+
+def split_annos():
+    ROOT = '/home/tharun/data/ILSVRC/Annotations/DET'
+    IM_ROOT = '/home/tharun/data/ILSVRC/Data/DET/'
+    annos = os.listdir(os.path.join(ROOT, 'train'))
+
+    for anno in annos:
+        name = anno.split('.')[0]
+        if os.path.exists(os.path.join(IM_ROOT, 'val', name + '.JPEG')):
+            shutil.move(os.path.join(ROOT, 'train', anno), os.path.join(ROOT, 'val', anno))
+        elif os.path.exists(os.path.join(IM_ROOT, 'test', name + '.JPEG')):
+            shutil.move(os.path.join(ROOT, 'train', anno), os.path.join(ROOT, 'test', anno))
+
 
 import xml.etree.ElementTree
 
