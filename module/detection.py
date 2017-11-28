@@ -5,6 +5,78 @@ import os
 import caffe
 import hashlib
 
+def validate_file(fpath, file_hash, algorithm='auto', chunk_size=65535):
+    """Validates a file against a sha256 or md5 hash.
+    From keras/data_utils.py
+    # Arguments
+    fpath: path to the file being validated
+    file_hash:  The expected hash string of the file.
+    The sha256 and md5 hash algorithms are both supported.
+    algorithm: Hash algorithm, one of 'auto', 'sha256', or 'md5'.
+    The default 'auto' detects the hash algorithm in use.
+    chunk_size: Bytes to read at a time, important for large files.
+    # Returns
+    Whether the file is valid
+    """
+    if ((algorithm is 'sha256') or (algorithm is 'auto' and len(file_hash) is 64)):
+        hasher = 'sha256'
+    else:
+        hasher = 'md5'
+
+    if str(_hash_file(fpath, hasher, chunk_size)) == str(file_hash):
+        return True
+    else:
+        return False
+
+
+def _hash_file(fpath, algorithm='sha256', chunk_size=65535):
+    """Calculates a file sha256 or md5 hash.
+    From keras/data_utils.py
+    # Example
+    ```python
+    >>> from keras.data_utils import _hash_file
+    >>> _hash_file('/path/to/file.zip')
+    'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+    ```
+    # Arguments
+    fpath: path to the file being validated
+    algorithm: hash algorithm, one of 'auto', 'sha256', or 'md5'.
+    The default 'auto' detects the hash algorithm in use.
+    chunk_size: Bytes to read at a time, important for large files.
+    # Returns
+    The file hash
+    """
+    if (algorithm is 'sha256') or (algorithm is 'auto' and len(hash) is 64):
+        hasher = hashlib.sha256()
+    else:
+        hasher = hashlib.md5()
+
+    with open(fpath, 'rb') as fpath_file:
+        for chunk in iter(lambda: fpath_file.read(chunk_size), b''):
+            hasher.update(chunk)
+
+    return hasher.hexdigest()
+
+
+def get_labelname(labelmap, labels):
+    """
+    Retrieves human-readable labels from labelmap file
+    From ssd_detect.ipynb in SSD repo
+    """
+    num_labels = len(labelmap.item)
+    labelnames = []
+    if type(labels) is not list:
+        labels = [labels]
+    for label in labels:
+        found = False
+        for i in xrange(0, num_labels):
+            if label == labelmap.item[i].label:
+                found = True
+                labelnames.append(labelmap.item[i].display_name)
+                break
+        assert found == True
+    return labelnames
+
 class SSDDetect:
     def __init__(self, weights_path, def_path,
     labelmap_path=os.path.expanduser('~/SSD-instruments/data/ILSVRC2016/labelmap_ilsvrc_det.prototxt')):
@@ -27,84 +99,11 @@ class SSDDetect:
         caffe.set_mode_gpu()
 
 
-    def validate_file(fpath, file_hash, algorithm='auto', chunk_size=65535):
-        """Validates a file against a sha256 or md5 hash.
-        From keras/data_utils.py
-        # Arguments
-        fpath: path to the file being validated
-        file_hash:  The expected hash string of the file.
-        The sha256 and md5 hash algorithms are both supported.
-        algorithm: Hash algorithm, one of 'auto', 'sha256', or 'md5'.
-        The default 'auto' detects the hash algorithm in use.
-        chunk_size: Bytes to read at a time, important for large files.
-        # Returns
-        Whether the file is valid
-        """
-        if ((algorithm is 'sha256') or (algorithm is 'auto' and len(file_hash) is 64)):
-            hasher = 'sha256'
-        else:
-            hasher = 'md5'
-
-        if str(_hash_file(fpath, hasher, chunk_size)) == str(file_hash):
-            return True
-        else:
-            return False
-
-
-    def _hash_file(fpath, algorithm='sha256', chunk_size=65535):
-        """Calculates a file sha256 or md5 hash.
-        From keras/data_utils.py
-        # Example
-        ```python
-        >>> from keras.data_utils import _hash_file
-        >>> _hash_file('/path/to/file.zip')
-        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-        ```
-        # Arguments
-        fpath: path to the file being validated
-        algorithm: hash algorithm, one of 'auto', 'sha256', or 'md5'.
-        The default 'auto' detects the hash algorithm in use.
-        chunk_size: Bytes to read at a time, important for large files.
-        # Returns
-        The file hash
-        """
-        if (algorithm is 'sha256') or (algorithm is 'auto' and len(hash) is 64):
-            hasher = hashlib.sha256()
-        else:
-            hasher = hashlib.md5()
-
-        with open(fpath, 'rb') as fpath_file:
-            for chunk in iter(lambda: fpath_file.read(chunk_size), b''):
-                hasher.update(chunk)
-
-        return hasher.hexdigest()
-
-
-    def get_labelname(labelmap, labels):
-        """
-        Retrieves human-readable labels from labelmap file
-        From ssd_detect.ipynb in SSD repo
-        """
-        num_labels = len(labelmap.item)
-        labelnames = []
-        if type(labels) is not list:
-            labels = [labels]
-        for label in labels:
-            found = False
-            for i in xrange(0, num_labels):
-                if label == labelmap.item[i].label:
-                    found = True
-                    labelnames.append(labelmap.item[i].display_name)
-                    break
-            assert found == True
-        return labelnames
-
-
     # TODO: adjust for image batches? - determine whether necessary
     def detect(self, image, batch_size=1):
         f = open(self.labelmap_path, 'r')
         labelmap = caffe_pb2.LabelMap()
-        text_format.Merge(str(file.read()), labelmap)
+        text_format.Merge(str(f.read()), labelmap)
 
         model_def = self.def_path
         model_weights = self.weights_path
