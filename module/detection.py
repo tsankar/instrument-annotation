@@ -173,7 +173,3 @@ class SSDDetect:
         for im in frames:
             boxes = self.detect(im)
             box_sets.append(boxes)
-
-    # TODO: determine whether this is necessary
-    def detect_batches(self, image_dir, batch_size):
-        pass
