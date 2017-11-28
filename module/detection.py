@@ -172,3 +172,5 @@ class SSDDetect:
         for im in frames:
             boxes = self.detect(im)
             box_sets.append(boxes)
+
+        return box_sets
