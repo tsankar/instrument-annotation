@@ -78,7 +78,7 @@ def get_labelname(labelmap, labels):
     return labelnames
 
 class SSDDetect:
-    def __init__(self, weights_path, def_path,
+    def __init__(self, def_path, weights_path,
     labelmap_path=os.path.expanduser('~/SSD-instruments/data/ILSVRC2016/labelmap_ilsvrc_det.prototxt')):
         """
         weights_path = path to model weights (.caffemodel)
@@ -145,7 +145,7 @@ class SSDDetect:
             det_ymax = detections[0,0,:,6]
 
             # Get detections with confidence higher than 0.6.
-            top_indices = [i for i, conf in enumerate(det_conf) if conf >= 0.6]
+            top_indices = [i for i, conf in enumerate(det_conf) if conf >= 0.3]
 
             top_conf = det_conf[top_indices]
             top_label_indices = det_label[top_indices].tolist()
@@ -156,8 +156,8 @@ class SSDDetect:
             top_ymax = det_ymax[top_indices]
 
             boxes = []
-            # Tuples formatted ((xmin, ymin, w, h), score, label)
-            # where label is human-readable label
+            # Tuples formatted (((xmin, ymin), w, h), score, label, labelname)
+            # where labelname is human-readable label
             for i in xrange(top_conf.shape[0]):
                 xmin = int(round(top_xmin[i] * image.shape[1]))
                 ymin = int(round(top_ymin[i] * image.shape[0]))
@@ -166,8 +166,8 @@ class SSDDetect:
                 score = top_conf[i]
                 label = int(top_label_indices[i])
                 label_name = top_labels[i]
-                coords = (xmin, ymin, xmax-xmin+1, ymax-ymin+1)
-                tup = (coords, score, label_name)
+                coords = (xmin, ymin), xmax-xmin+1, ymax-ymin+1
+                tup = (coords, score, label, label_name)
                 boxes.append(tup)
 
             frame_boxes.append(boxes)
