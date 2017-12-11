@@ -100,7 +100,13 @@ class SSDDetect:
 
 
     # TODO: adjust for image batches? - determine whether necessary
-    def detect(self, image, batch_size=1):
+    def detect(self, frames, batch_size=1):
+        '''
+        frames: numpy array (of RGB images) of shape
+            (number of frames, height, width, channels)
+        Returns list of list of boxes for each frame. Each box is
+        formatted as a tuple ((xmin, ymin, w, h), score, label)
+        '''
         f = open(self.labelmap_path, 'r')
         labelmap = caffe_pb2.LabelMap()
         text_format.Merge(str(f.read()), labelmap)
@@ -121,56 +127,49 @@ class SSDDetect:
         net.blobs['data'].reshape(batch_size, 3, image_resize, image_resize)
         # image = caffe.io.load_image(image_path)
 
-        transformed_image = transformer.preprocess('data', image)
-        net.blobs['data'].data[...] = transformed_image
+        frame_boxes = []
 
-        # Forward pass.
-        detections = net.forward()['detection_out']
+        for image in frames:
+            transformed_image = transformer.preprocess('data', image)
+            net.blobs['data'].data[...] = transformed_image
 
-        # Parse the outputs.
-        det_label = detections[0,0,:,1]
-        det_conf = detections[0,0,:,2]
-        det_xmin = detections[0,0,:,3]
-        det_ymin = detections[0,0,:,4]
-        det_xmax = detections[0,0,:,5]
-        det_ymax = detections[0,0,:,6]
+            # Forward pass.
+            detections = net.forward()['detection_out']
 
-        # Get detections with confidence higher than 0.6.
-        top_indices = [i for i, conf in enumerate(det_conf) if conf >= 0.6]
+            # Parse the outputs.
+            det_label = detections[0,0,:,1]
+            det_conf = detections[0,0,:,2]
+            det_xmin = detections[0,0,:,3]
+            det_ymin = detections[0,0,:,4]
+            det_xmax = detections[0,0,:,5]
+            det_ymax = detections[0,0,:,6]
 
-        top_conf = det_conf[top_indices]
-        top_label_indices = det_label[top_indices].tolist()
-        top_labels = get_labelname(labelmap, top_label_indices)
-        top_xmin = det_xmin[top_indices]
-        top_ymin = det_ymin[top_indices]
-        top_xmax = det_xmax[top_indices]
-        top_ymax = det_ymax[top_indices]
+            # Get detections with confidence higher than 0.6.
+            top_indices = [i for i, conf in enumerate(det_conf) if conf >= 0.6]
 
-        boxes = []
-        # Tuples formatted ((xmin, ymin, w, h), score, label)
-        # where label is human-readable label
-        for i in xrange(top_conf.shape[0]):
-            xmin = int(round(top_xmin[i] * image.shape[1]))
-            ymin = int(round(top_ymin[i] * image.shape[0]))
-            xmax = int(round(top_xmax[i] * image.shape[1]))
-            ymax = int(round(top_ymax[i] * image.shape[0]))
-            score = top_conf[i]
-            label = int(top_label_indices[i])
-            label_name = top_labels[i]
-            coords = (xmin, ymin, xmax-xmin+1, ymax-ymin+1)
-            tup = (coords, score, label_name)
-            boxes.append(tup)
+            top_conf = det_conf[top_indices]
+            top_label_indices = det_label[top_indices].tolist()
+            top_labels = get_labelname(labelmap, top_label_indices)
+            top_xmin = det_xmin[top_indices]
+            top_ymin = det_ymin[top_indices]
+            top_xmax = det_xmax[top_indices]
+            top_ymax = det_ymax[top_indices]
 
-        return boxes
+            boxes = []
+            # Tuples formatted ((xmin, ymin, w, h), score, label)
+            # where label is human-readable label
+            for i in xrange(top_conf.shape[0]):
+                xmin = int(round(top_xmin[i] * image.shape[1]))
+                ymin = int(round(top_ymin[i] * image.shape[0]))
+                xmax = int(round(top_xmax[i] * image.shape[1]))
+                ymax = int(round(top_ymax[i] * image.shape[0]))
+                score = top_conf[i]
+                label = int(top_label_indices[i])
+                label_name = top_labels[i]
+                coords = (xmin, ymin, xmax-xmin+1, ymax-ymin+1)
+                tup = (coords, score, label_name)
+                boxes.append(tup)
 
-    def detect_vid(self, frames):
-        '''
-        frames: numpy array (of RGB images) of shape
-            (number of frames, height, width, channels)
-        '''
-        box_sets = []
-        for im in frames:
-            boxes = self.detect(im)
-            box_sets.append(boxes)
+            frame_boxes.append(boxes)
 
-        return box_sets
+        return frame_boxes
