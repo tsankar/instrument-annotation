@@ -39,7 +39,9 @@ LABELMAP = 'data/ILSVRC2016/labelmap_ilsvrc_finetune.prototxt'
 
 print 'Running detection...'
 ssd = SSDDetect(DEPLOY, WEIGHTS, LABELMAP)
-frame_boxes = ssd.detect(frames)
+# You may have to lower this value to get good results
+conf_thresh = 0.4
+frame_boxes = ssd.detect(frames, conf_thresh)
 
 colors = plt.cm.hsv(np.linspace(0, 1, 10)).tolist()
 

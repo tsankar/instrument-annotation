@@ -100,7 +100,7 @@ class SSDDetect:
 
 
     # TODO: adjust for image batches? - determine whether necessary
-    def detect(self, frames, batch_size=1):
+    def detect(self, frames, conf_thresh, batch_size=1):
         '''
         frames: numpy array (of RGB images) of shape
             (number of frames, height, width, channels)
@@ -145,7 +145,7 @@ class SSDDetect:
             det_ymax = detections[0,0,:,6]
 
             # Get detections with confidence higher than 0.6.
-            top_indices = [i for i, conf in enumerate(det_conf) if conf >= 0.4]
+            top_indices = [i for i, conf in enumerate(det_conf) if conf >= conf_thresh]
 
             top_conf = det_conf[top_indices]
             top_label_indices = det_label[top_indices].tolist()
