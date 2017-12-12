@@ -1,0 +1,50 @@
+item {
+  name: "none_of_the_above"
+  label: 0
+  display_name: "background"
+}
+item {
+  name: "n03249569"
+  label: 1
+  display_name: "drum"
+}
+item {
+  name: "n03467517"
+  label: 2
+  display_name: "guitar"
+}
+item {
+  name: "n00007846"
+  label: 3
+  display_name: "person"
+}
+item {
+  name: "n03928116"
+  label: 4
+  display_name: "piano"
+}
+item {
+  name: "n03272010"
+  label: 5
+  display_name: "electric_guitar"
+}
+item {
+  name: "n02804123"
+  label: 6
+  display_name: "bass_guitar"
+}
+item {
+  name: "n04249415"
+  label: 7
+  display_name: "snare_drum"
+}
+item {
+  name: "n02676566"
+  label: 8
+  display_name: "acoustic_guitar"
+}
+item {
+  name: "n03499907"
+  label: 9
+  display_name: "Hawaiian_guitar"
+}

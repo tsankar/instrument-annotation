@@ -12,12 +12,12 @@ layer {
   bottom: "data"
   top: "conv1_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -28,7 +28,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -44,12 +44,12 @@ layer {
   bottom: "conv1_1"
   top: "conv1_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -60,7 +60,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -87,12 +87,12 @@ layer {
   bottom: "pool1"
   top: "conv2_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -103,7 +103,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -119,12 +119,12 @@ layer {
   bottom: "conv2_1"
   top: "conv2_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -135,7 +135,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -162,12 +162,12 @@ layer {
   bottom: "pool2"
   top: "conv3_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -178,7 +178,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -194,12 +194,12 @@ layer {
   bottom: "conv3_1"
   top: "conv3_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -210,7 +210,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -226,12 +226,12 @@ layer {
   bottom: "conv3_2"
   top: "conv3_3"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -242,7 +242,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -269,12 +269,12 @@ layer {
   bottom: "pool3"
   top: "conv4_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -285,7 +285,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -301,12 +301,12 @@ layer {
   bottom: "conv4_1"
   top: "conv4_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -317,7 +317,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -333,12 +333,12 @@ layer {
   bottom: "conv4_2"
   top: "conv4_3"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -349,7 +349,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -376,12 +376,12 @@ layer {
   bottom: "pool4"
   top: "conv5_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -392,8 +392,9 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
+    dilation: 1
   }
 }
 layer {
@@ -408,12 +409,12 @@ layer {
   bottom: "conv5_1"
   top: "conv5_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -424,8 +425,9 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
+    dilation: 1
   }
 }
 layer {
@@ -440,12 +442,12 @@ layer {
   bottom: "conv5_2"
   top: "conv5_3"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -456,8 +458,9 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
+    dilation: 1
   }
 }
 layer {
@@ -484,12 +487,12 @@ layer {
   bottom: "pool5"
   top: "fc6"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 1024
@@ -500,7 +503,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     dilation: 6
   }
@@ -517,12 +520,12 @@ layer {
   bottom: "fc6"
   top: "fc7"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 1024
@@ -532,7 +535,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -548,12 +551,12 @@ layer {
   bottom: "fc7"
   top: "conv6_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -565,7 +568,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -581,12 +584,12 @@ layer {
   bottom: "conv6_1"
   top: "conv6_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -598,7 +601,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -614,12 +617,12 @@ layer {
   bottom: "conv6_2"
   top: "conv7_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -631,7 +634,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -647,12 +650,12 @@ layer {
   bottom: "conv7_1"
   top: "conv7_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -664,7 +667,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -680,12 +683,12 @@ layer {
   bottom: "conv7_2"
   top: "conv8_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -697,7 +700,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -713,12 +716,12 @@ layer {
   bottom: "conv8_1"
   top: "conv8_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -730,7 +733,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -746,12 +749,12 @@ layer {
   bottom: "conv8_2"
   top: "conv9_1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -763,7 +766,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -779,12 +782,12 @@ layer {
   bottom: "conv9_1"
   top: "conv9_2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -796,7 +799,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -815,7 +818,7 @@ layer {
     across_spatial: false
     scale_filler {
       type: "constant"
-      value: 20
+      value: 20.0
     }
     channel_shared: false
   }
@@ -826,12 +829,12 @@ layer {
   bottom: "conv4_3_norm"
   top: "conv4_3_norm_mbox_loc"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 16
@@ -843,7 +846,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -869,20 +872,20 @@ layer {
   }
 }
 layer {
-  name: "conv4_3_norm_mbox_conf"
+  name: "conv4_3_norm_mbox_conf_whatever_you_like"
   type: "Convolution"
   bottom: "conv4_3_norm"
-  top: "conv4_3_norm_mbox_conf"
+  top: "conv4_3_norm_mbox_conf_whatever_you_like"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
-    num_output: 804
+    num_output: 40
     pad: 1
     kernel_size: 3
     stride: 1
@@ -891,15 +894,15 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
 layer {
-  name: "conv4_3_norm_mbox_conf_perm"
+  name: "conv4_3_norm_mbox_conf_whatever_you_like_perm"
   type: "Permute"
-  bottom: "conv4_3_norm_mbox_conf"
-  top: "conv4_3_norm_mbox_conf_perm"
+  bottom: "conv4_3_norm_mbox_conf_whatever_you_like"
+  top: "conv4_3_norm_mbox_conf_whatever_you_like_perm"
   permute_param {
     order: 0
     order: 2
@@ -908,10 +911,10 @@ layer {
   }
 }
 layer {
-  name: "conv4_3_norm_mbox_conf_flat"
+  name: "conv4_3_norm_mbox_conf_whatever_you_like_flat"
   type: "Flatten"
-  bottom: "conv4_3_norm_mbox_conf_perm"
-  top: "conv4_3_norm_mbox_conf_flat"
+  bottom: "conv4_3_norm_mbox_conf_whatever_you_like_perm"
+  top: "conv4_3_norm_mbox_conf_whatever_you_like_flat"
   flatten_param {
     axis: 1
   }
@@ -925,14 +928,15 @@ layer {
   prior_box_param {
     min_size: 30.0
     max_size: 60.0
-    aspect_ratio: 2
+    aspect_ratio: 2.0
     flip: true
     clip: false
-    variance: 0.1
-    variance: 0.1
-    variance: 0.2
-    variance: 0.2
-    step: 8
+    variance: 0.10000000149
+    variance: 0.10000000149
+    variance: 0.20000000298
+    variance: 0.20000000298
+    step: 8.0
+    offset: 0.5
   }
 }
 layer {
@@ -941,12 +945,12 @@ layer {
   bottom: "fc7"
   top: "fc7_mbox_loc"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 24
@@ -958,7 +962,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -984,20 +988,20 @@ layer {
   }
 }
 layer {
-  name: "fc7_mbox_conf"
+  name: "fc7_mbox_conf_whatever_you_like"
   type: "Convolution"
   bottom: "fc7"
-  top: "fc7_mbox_conf"
+  top: "fc7_mbox_conf_whatever_you_like"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
-    num_output: 1206
+    num_output: 60
     pad: 1
     kernel_size: 3
     stride: 1
@@ -1006,15 +1010,15 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
 layer {
-  name: "fc7_mbox_conf_perm"
+  name: "fc7_mbox_conf_whatever_you_like_perm"
   type: "Permute"
-  bottom: "fc7_mbox_conf"
-  top: "fc7_mbox_conf_perm"
+  bottom: "fc7_mbox_conf_whatever_you_like"
+  top: "fc7_mbox_conf_whatever_you_like_perm"
   permute_param {
     order: 0
     order: 2
@@ -1023,10 +1027,10 @@ layer {
   }
 }
 layer {
-  name: "fc7_mbox_conf_flat"
+  name: "fc7_mbox_conf_whatever_you_like_flat"
   type: "Flatten"
-  bottom: "fc7_mbox_conf_perm"
-  top: "fc7_mbox_conf_flat"
+  bottom: "fc7_mbox_conf_whatever_you_like_perm"
+  top: "fc7_mbox_conf_whatever_you_like_flat"
   flatten_param {
     axis: 1
   }
@@ -1040,15 +1044,16 @@ layer {
   prior_box_param {
     min_size: 60.0
     max_size: 111.0
-    aspect_ratio: 2
-    aspect_ratio: 3
+    aspect_ratio: 2.0
+    aspect_ratio: 3.0
     flip: true
     clip: false
-    variance: 0.1
-    variance: 0.1
-    variance: 0.2
-    variance: 0.2
-    step: 16
+    variance: 0.10000000149
+    variance: 0.10000000149
+    variance: 0.20000000298
+    variance: 0.20000000298
+    step: 16.0
+    offset: 0.5
   }
 }
 layer {
@@ -1057,12 +1062,12 @@ layer {
   bottom: "conv6_2"
   top: "conv6_2_mbox_loc"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 24
@@ -1074,7 +1079,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -1100,20 +1105,20 @@ layer {
   }
 }
 layer {
-  name: "conv6_2_mbox_conf"
+  name: "conv6_2_mbox_conf_whatever_you_like"
   type: "Convolution"
   bottom: "conv6_2"
-  top: "conv6_2_mbox_conf"
+  top: "conv6_2_mbox_conf_whatever_you_like"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
-    num_output: 1206
+    num_output: 60
     pad: 1
     kernel_size: 3
     stride: 1
@@ -1122,15 +1127,15 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
 layer {
-  name: "conv6_2_mbox_conf_perm"
+  name: "conv6_2_mbox_conf_whatever_you_like_perm"
   type: "Permute"
-  bottom: "conv6_2_mbox_conf"
-  top: "conv6_2_mbox_conf_perm"
+  bottom: "conv6_2_mbox_conf_whatever_you_like"
+  top: "conv6_2_mbox_conf_whatever_you_like_perm"
   permute_param {
     order: 0
     order: 2
@@ -1139,10 +1144,10 @@ layer {
   }
 }
 layer {
-  name: "conv6_2_mbox_conf_flat"
+  name: "conv6_2_mbox_conf_whatever_you_like_flat"
   type: "Flatten"
-  bottom: "conv6_2_mbox_conf_perm"
-  top: "conv6_2_mbox_conf_flat"
+  bottom: "conv6_2_mbox_conf_whatever_you_like_perm"
+  top: "conv6_2_mbox_conf_whatever_you_like_flat"
   flatten_param {
     axis: 1
   }
@@ -1156,15 +1161,16 @@ layer {
   prior_box_param {
     min_size: 111.0
     max_size: 162.0
-    aspect_ratio: 2
-    aspect_ratio: 3
+    aspect_ratio: 2.0
+    aspect_ratio: 3.0
     flip: true
     clip: false
-    variance: 0.1
-    variance: 0.1
-    variance: 0.2
-    variance: 0.2
-    step: 32
+    variance: 0.10000000149
+    variance: 0.10000000149
+    variance: 0.20000000298
+    variance: 0.20000000298
+    step: 32.0
+    offset: 0.5
   }
 }
 layer {
@@ -1173,12 +1179,12 @@ layer {
   bottom: "conv7_2"
   top: "conv7_2_mbox_loc"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 24
@@ -1190,7 +1196,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -1216,20 +1222,20 @@ layer {
   }
 }
 layer {
-  name: "conv7_2_mbox_conf"
+  name: "conv7_2_mbox_conf_whatever_you_like"
   type: "Convolution"
   bottom: "conv7_2"
-  top: "conv7_2_mbox_conf"
+  top: "conv7_2_mbox_conf_whatever_you_like"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
-    num_output: 1206
+    num_output: 60
     pad: 1
     kernel_size: 3
     stride: 1
@@ -1238,15 +1244,15 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
 layer {
-  name: "conv7_2_mbox_conf_perm"
+  name: "conv7_2_mbox_conf_whatever_you_like_perm"
   type: "Permute"
-  bottom: "conv7_2_mbox_conf"
-  top: "conv7_2_mbox_conf_perm"
+  bottom: "conv7_2_mbox_conf_whatever_you_like"
+  top: "conv7_2_mbox_conf_whatever_you_like_perm"
   permute_param {
     order: 0
     order: 2
@@ -1255,10 +1261,10 @@ layer {
   }
 }
 layer {
-  name: "conv7_2_mbox_conf_flat"
+  name: "conv7_2_mbox_conf_whatever_you_like_flat"
   type: "Flatten"
-  bottom: "conv7_2_mbox_conf_perm"
-  top: "conv7_2_mbox_conf_flat"
+  bottom: "conv7_2_mbox_conf_whatever_you_like_perm"
+  top: "conv7_2_mbox_conf_whatever_you_like_flat"
   flatten_param {
     axis: 1
   }
@@ -1272,15 +1278,16 @@ layer {
   prior_box_param {
     min_size: 162.0
     max_size: 213.0
-    aspect_ratio: 2
-    aspect_ratio: 3
+    aspect_ratio: 2.0
+    aspect_ratio: 3.0
     flip: true
     clip: false
-    variance: 0.1
-    variance: 0.1
-    variance: 0.2
-    variance: 0.2
-    step: 64
+    variance: 0.10000000149
+    variance: 0.10000000149
+    variance: 0.20000000298
+    variance: 0.20000000298
+    step: 64.0
+    offset: 0.5
   }
 }
 layer {
@@ -1289,12 +1296,12 @@ layer {
   bottom: "conv8_2"
   top: "conv8_2_mbox_loc"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 16
@@ -1306,7 +1313,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -1332,20 +1339,20 @@ layer {
   }
 }
 layer {
-  name: "conv8_2_mbox_conf"
+  name: "conv8_2_mbox_conf_whatever_you_like"
   type: "Convolution"
   bottom: "conv8_2"
-  top: "conv8_2_mbox_conf"
+  top: "conv8_2_mbox_conf_whatever_you_like"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
-    num_output: 804
+    num_output: 40
     pad: 1
     kernel_size: 3
     stride: 1
@@ -1354,15 +1361,15 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
 layer {
-  name: "conv8_2_mbox_conf_perm"
+  name: "conv8_2_mbox_conf_whatever_you_like_perm"
   type: "Permute"
-  bottom: "conv8_2_mbox_conf"
-  top: "conv8_2_mbox_conf_perm"
+  bottom: "conv8_2_mbox_conf_whatever_you_like"
+  top: "conv8_2_mbox_conf_whatever_you_like_perm"
   permute_param {
     order: 0
     order: 2
@@ -1371,10 +1378,10 @@ layer {
   }
 }
 layer {
-  name: "conv8_2_mbox_conf_flat"
+  name: "conv8_2_mbox_conf_whatever_you_like_flat"
   type: "Flatten"
-  bottom: "conv8_2_mbox_conf_perm"
-  top: "conv8_2_mbox_conf_flat"
+  bottom: "conv8_2_mbox_conf_whatever_you_like_perm"
+  top: "conv8_2_mbox_conf_whatever_you_like_flat"
   flatten_param {
     axis: 1
   }
@@ -1388,14 +1395,15 @@ layer {
   prior_box_param {
     min_size: 213.0
     max_size: 264.0
-    aspect_ratio: 2
+    aspect_ratio: 2.0
     flip: true
     clip: false
-    variance: 0.1
-    variance: 0.1
-    variance: 0.2
-    variance: 0.2
-    step: 100
+    variance: 0.10000000149
+    variance: 0.10000000149
+    variance: 0.20000000298
+    variance: 0.20000000298
+    step: 100.0
+    offset: 0.5
   }
 }
 layer {
@@ -1404,12 +1412,12 @@ layer {
   bottom: "conv9_2"
   top: "conv9_2_mbox_loc"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 16
@@ -1421,7 +1429,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
@@ -1447,20 +1455,20 @@ layer {
   }
 }
 layer {
-  name: "conv9_2_mbox_conf"
+  name: "conv9_2_mbox_conf_whatever_you_like"
   type: "Convolution"
   bottom: "conv9_2"
-  top: "conv9_2_mbox_conf"
+  top: "conv9_2_mbox_conf_whatever_you_like"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
-    num_output: 804
+    num_output: 40
     pad: 1
     kernel_size: 3
     stride: 1
@@ -1469,15 +1477,15 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
   }
 }
 layer {
-  name: "conv9_2_mbox_conf_perm"
+  name: "conv9_2_mbox_conf_whatever_you_like_perm"
   type: "Permute"
-  bottom: "conv9_2_mbox_conf"
-  top: "conv9_2_mbox_conf_perm"
+  bottom: "conv9_2_mbox_conf_whatever_you_like"
+  top: "conv9_2_mbox_conf_whatever_you_like_perm"
   permute_param {
     order: 0
     order: 2
@@ -1486,10 +1494,10 @@ layer {
   }
 }
 layer {
-  name: "conv9_2_mbox_conf_flat"
+  name: "conv9_2_mbox_conf_whatever_you_like_flat"
   type: "Flatten"
-  bottom: "conv9_2_mbox_conf_perm"
-  top: "conv9_2_mbox_conf_flat"
+  bottom: "conv9_2_mbox_conf_whatever_you_like_perm"
+  top: "conv9_2_mbox_conf_whatever_you_like_flat"
   flatten_param {
     axis: 1
   }
@@ -1503,14 +1511,15 @@ layer {
   prior_box_param {
     min_size: 264.0
     max_size: 315.0
-    aspect_ratio: 2
+    aspect_ratio: 2.0
     flip: true
     clip: false
-    variance: 0.1
-    variance: 0.1
-    variance: 0.2
-    variance: 0.2
-    step: 300
+    variance: 0.10000000149
+    variance: 0.10000000149
+    variance: 0.20000000298
+    variance: 0.20000000298
+    step: 300.0
+    offset: 0.5
   }
 }
 layer {
@@ -1530,12 +1539,12 @@ layer {
 layer {
   name: "mbox_conf"
   type: "Concat"
-  bottom: "conv4_3_norm_mbox_conf_flat"
-  bottom: "fc7_mbox_conf_flat"
-  bottom: "conv6_2_mbox_conf_flat"
-  bottom: "conv7_2_mbox_conf_flat"
-  bottom: "conv8_2_mbox_conf_flat"
-  bottom: "conv9_2_mbox_conf_flat"
+  bottom: "conv4_3_norm_mbox_conf_whatever_you_like_flat"
+  bottom: "fc7_mbox_conf_whatever_you_like_flat"
+  bottom: "conv6_2_mbox_conf_whatever_you_like_flat"
+  bottom: "conv7_2_mbox_conf_whatever_you_like_flat"
+  bottom: "conv8_2_mbox_conf_whatever_you_like_flat"
+  bottom: "conv9_2_mbox_conf_whatever_you_like_flat"
   top: "mbox_conf"
   concat_param {
     axis: 1
@@ -1564,7 +1573,7 @@ layer {
     shape {
       dim: 0
       dim: -1
-      dim: 201
+      dim: 10
     }
   }
 }
@@ -1597,23 +1606,24 @@ layer {
     phase: TEST
   }
   detection_output_param {
-    num_classes: 201
+    num_classes: 10
     share_location: true
     background_label_id: 0
     nms_param {
-      nms_threshold: 0.45
+      nms_threshold: 0.449999988079
       top_k: 400
     }
     save_output_param {
       output_directory: "/home/tharun/data/ILSVRC2016/results/SSD_300x300"
       output_name_prefix: "val2_ssd300_results"
       output_format: "ILSVRC"
-      label_map_file: "/home/tharun/instrument-annotation-scratch/module/data/ILSVRC2016/labelmap_ilsvrc_det.prototxt"
+      label_map_file: "data/ILSVRC2016/labelmap_ilsvrc_det.prototxt"
       name_size_file: "data/ILSVRC2016/val2_name_size.txt"
       num_test_image: 432
     }
     code_type: CENTER_SIZE
     keep_top_k: 200
-    confidence_threshold: 0.01
+    confidence_threshold: 0.00999999977648
   }
 }
+
