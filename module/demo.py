@@ -6,32 +6,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvas
 import skimage.io
+import itertools
 
 plt.rcParams['figure.figsize'] = (10, 10)
 plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 
-START_TIME = 83
-start_frame = START_TIME * 30
-length = 5
-
 VID_NAME = 'clapton.mkv'
-VID_PATH = os.path.expanduser('~/' + VID_NAME)
-print 'Loading video...'
-vidgen = skvideo.io.vreader(VID_PATH)
-
-frames = []
-i = 0
-# Load one second of the video
-for frame in vidgen:
-    if i >= start_frame:
-        frame = skimage.img_as_float(frame).astype(np.float32)
-        frames.append(frame)
-    i += 1
-    if i == start_frame + length * 30:
-        break
-
-frames = np.array(frames)
+VID_PATH = os.path.expanduser('~/Videos/' + VID_NAME)
+start = 64
+length = 5
 
 WEIGHTS = 'data/frozen_aug.caffemodel'
 DEPLOY = 'data/deploy_finetune.prototxt'
@@ -40,10 +24,13 @@ LABELMAP = 'data/ILSVRC2016/labelmap_ilsvrc_finetune.prototxt'
 print 'Running detection...'
 ssd = SSDDetect(DEPLOY, WEIGHTS, LABELMAP)
 # You may have to lower this value to get good results
-conf_thresh = 0.4
-frame_boxes = ssd.detect(frames, conf_thresh)
+conf_thresh = 0.3
+frame_boxes = ssd.detect_vid(VID_PATH, start, length, conf_thresh)
 
 colors = plt.cm.hsv(np.linspace(0, 1, 10)).tolist()
+
+vidgen = skvideo.io.vreader(VID_PATH)
+frames = itertools.islice(vidgen, start*30, None)
 
 bb_frames = []
 for frame, boxes in zip(frames, frame_boxes):

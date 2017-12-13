@@ -4,6 +4,8 @@ from caffe.proto import caffe_pb2
 import os
 import caffe
 import hashlib
+import skvideo.io
+import skimage.io
 
 def validate_file(fpath, file_hash, algorithm='auto', chunk_size=65535):
     """Validates a file against a sha256 or md5 hash.
@@ -84,8 +86,9 @@ class SSDDetect:
         weights_path = path to model weights (.caffemodel)
         def_path = path to model definition (deploy.prototxt)
         """
-        self.def_path = def_path
-        self.labelmap_path = labelmap_path
+        f = open(labelmap_path, 'r')
+        self.labelmap = caffe_pb2.LabelMap()
+        text_format.Merge(str(f.read()), self.labelmap)
 
         # expected_hash = ''
         #TODO: versioning
@@ -93,7 +96,14 @@ class SSDDetect:
         #     # TODO: Download correct weights
         #     weights_path = ''
 
-        self.weights_path = weights_path
+        self.net = caffe.Net(def_path, weights_path, caffe.TEST)
+
+        # input preprocessing: 'data' is the name of the input blob == net.inputs[0]
+        self.transformer = caffe.io.Transformer({'data': self.net.blobs['data'].data.shape})
+        self.transformer.set_transpose('data', (2, 0, 1))
+        self.transformer.set_mean('data', np.array([104,117,123])) # mean pixel
+        self.transformer.set_raw_scale('data', 255)  # the reference model operates on images in [0,255] range instead of [0,1]
+        self.transformer.set_channel_swap('data', (2,1,0))  # the reference model has channels in BGR order instead of RGB
 
         caffe.set_device(0)
         caffe.set_mode_gpu()
@@ -107,34 +117,19 @@ class SSDDetect:
         Returns list of list of boxes for each frame. Each box is
         formatted as a tuple ((xmin, ymin, w, h), score, label)
         '''
-        f = open(self.labelmap_path, 'r')
-        labelmap = caffe_pb2.LabelMap()
-        text_format.Merge(str(f.read()), labelmap)
-
-        model_def = self.def_path
-        model_weights = self.weights_path
-
-        net = caffe.Net(model_def, model_weights, caffe.TEST)
-
-        # input preprocessing: 'data' is the name of the input blob == net.inputs[0]
-        transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-        transformer.set_transpose('data', (2, 0, 1))
-        transformer.set_mean('data', np.array([104,117,123])) # mean pixel
-        transformer.set_raw_scale('data', 255)  # the reference model operates on images in [0,255] range instead of [0,1]
-        transformer.set_channel_swap('data', (2,1,0))  # the reference model has channels in BGR order instead of RGB
+        # image = caffe.io.load_image(image_path)
 
         image_resize = 300
-        net.blobs['data'].reshape(batch_size, 3, image_resize, image_resize)
-        # image = caffe.io.load_image(image_path)
+        self.net.blobs['data'].reshape(batch_size, 3, image_resize, image_resize)
 
         frame_boxes = []
 
         for image in frames:
-            transformed_image = transformer.preprocess('data', image)
-            net.blobs['data'].data[...] = transformed_image
+            transformed_image = self.transformer.preprocess('data', image)
+            self.net.blobs['data'].data[...] = transformed_image
 
             # Forward pass.
-            detections = net.forward()['detection_out']
+            detections = self.net.forward()['detection_out']
 
             # Parse the outputs.
             det_label = detections[0,0,:,1]
@@ -149,7 +144,7 @@ class SSDDetect:
 
             top_conf = det_conf[top_indices]
             top_label_indices = det_label[top_indices].tolist()
-            top_labels = get_labelname(labelmap, top_label_indices)
+            top_labels = get_labelname(self.labelmap, top_label_indices)
             top_xmin = det_xmin[top_indices]
             top_ymin = det_ymin[top_indices]
             top_xmax = det_xmax[top_indices]
@@ -171,5 +166,35 @@ class SSDDetect:
                 boxes.append(tup)
 
             frame_boxes.append(boxes)
+
+        return frame_boxes
+
+
+    def detect_vid(self, vid_path, start, length, conf_thresh):
+        vidgen = skvideo.io.vreader(vid_path)
+
+        frame_start = start * 30
+        print 'Frame start', frame_start
+        frame_length = length * 30
+
+        i = 0
+        j = 0
+        batch = []
+        frame_boxes = []
+        for frame in vidgen:
+            if j >= frame_start:
+                frame_float = skimage.img_as_float(frame).astype(np.float32)
+                batch.append(frame_float)
+                if i == 29:
+                    i = 0
+                    boxes = self.detect(np.array(batch), conf_thresh)
+                    frame_boxes.extend(boxes)
+                    batch = []
+                else:
+                    i += 1
+                if j == frame_start + frame_length:
+                    break
+            j += 1
+
 
         return frame_boxes
