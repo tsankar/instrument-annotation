@@ -25,29 +25,27 @@ print 'Running detection...'
 ssd = SSDDetect(DEPLOY, WEIGHTS, LABELMAP)
 # You may have to lower this value to get good results
 conf_thresh = 0.3
-frame_boxes = ssd.detect_vid(VID_PATH, start, length, conf_thresh)
+boxgen = ssd.detect_vid(VID_PATH, start, length, conf_thresh)
 
 colors = plt.cm.hsv(np.linspace(0, 1, 10)).tolist()
 
-vidgen = skvideo.io.vreader(VID_PATH)
-frames = itertools.islice(vidgen, start*30, None)
-
 bb_frames = []
-for frame, boxes in zip(frames, frame_boxes):
-    plt.imshow(frame)
-    curr_axis = plt.gca()
-    for coords, score, label, label_name in boxes:
-        color = colors[label]
-        curr_axis.add_patch(plt.Rectangle(*coords, fill=False, edgecolor=color, linewidth=2))
-        display_txt = '%s: %.2f'%(label_name, score)
-        curr_axis.text(coords[0][0], coords[0][1], display_txt, bbox={'facecolor':color, 'alpha':0.5})
-    fig = plt.gcf()
-    fig.canvas.draw()
+for batch, frame_boxes in boxgen:
+    for frame, boxes in zip(batch, frame_boxes):
+        plt.imshow(frame)
+        curr_axis = plt.gca()
+        for coords, score, label, label_name in boxes:
+            color = colors[label]
+            curr_axis.add_patch(plt.Rectangle(*coords, fill=False, edgecolor=color, linewidth=2))
+            display_txt = '%s: %.2f'%(label_name, score)
+            curr_axis.text(coords[0][0], coords[0][1], display_txt, bbox={'facecolor':color, 'alpha':0.5})
+        fig = plt.gcf()
+        fig.canvas.draw()
 
-    data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-    data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-    bb_frames.append(data)
-    plt.clf()
+        data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+        data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+        bb_frames.append(data)
+        plt.clf()
 
 plt.close()
 

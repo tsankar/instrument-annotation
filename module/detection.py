@@ -180,7 +180,6 @@ class SSDDetect:
         i = 0
         j = 0
         batch = []
-        frame_boxes = []
         for frame in vidgen:
             if j >= frame_start:
                 frame_float = skimage.img_as_float(frame).astype(np.float32)
@@ -188,13 +187,10 @@ class SSDDetect:
                 if i == 29:
                     i = 0
                     boxes = self.detect(np.array(batch), conf_thresh)
-                    frame_boxes.extend(boxes)
+                    yield batch, boxes
                     batch = []
                 else:
                     i += 1
                 if j == frame_start + frame_length:
                     break
             j += 1
-
-
-        return frame_boxes
