@@ -1,7 +1,5 @@
 import os
-import sys
 from detection import SSDDetect
-import skvideo.io
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvas

@@ -4,3 +4,4 @@ output/
 *.pyc
 *.caffemodel
 *.mp4
+*.txt
