@@ -165,15 +165,62 @@ class SSDDetect:
                 tup = (coords, score, label, label_name)
                 boxes.append(tup)
 
-            frame_boxes.append(boxes)
+            new_boxes = []
+            skips = []
+            # Remove overlaps
+            if len(boxes) > 1:
+                i = 0
+                while i < len(boxes):
+                    if i not in skips:
+                        j = i + 1
+                        while j < len(boxes):
+                            if j not in skips:
+                                boxA = boxes[i][0]
+                                xa1 = boxA[0][0]
+                                ya1 = boxA[0][1]
+                                A = {'x1': xa1, 'y1': ya1, 'x2': xa1 + boxA[1] - 1,
+                                'y2': ya1 + boxA[2] - 1}
+
+                                boxB = boxes[j][0]
+                                xb1 = boxB[0][0]
+                                yb1 = boxB[0][1]
+                                B = {'x1': xb1, 'y1': yb1, 'x2': xb1 + boxB[1] - 1,
+                                'y2': yb1 + boxB[2] - 1}
+
+                                SI = np.max([ 0, 1 + np.min([A['x2'],B['x2']]) - np.max([A['x1'],B['x1']]) ]) * \
+                                np.max([ 0, 1 + np.min([A['y2'],B['y2']]) - np.max([A['y1'],B['y1']]) ])
+                                s = boxA[1] * boxA[2] + boxB[1] * boxB[2] - SI
+                                ratio = float(SI) / float(s)
+
+                                # print 'Ratio', ratio
+
+                                if ratio > 0.8:
+                                    if boxes[i][1] > boxes[j][1]:
+                                        skips.append(j)
+                                    else:
+                                        skips.append(i)
+                                        break
+                            j += 1
+                    i += 1
+
+                for k in xrange(len(boxes)):
+                    if k not in skips:
+                        new_boxes.append(boxes[k])
+
+
+            else:
+                new_boxes = boxes
+
+            frame_boxes.append(new_boxes)
 
         return frame_boxes
 
 
     def detect_vid(self, vid_path, start, length, conf_thresh):
         vidgen = skvideo.io.vreader(vid_path)
+        num_frames = int(skvideo.io.ffprobe(vid_path)['video']['@nb_frames'])
 
-        frame_start = start * 30
+        frame_start = start
         print 'Frame start', frame_start
         frame_length = length * 30
 
@@ -184,7 +231,7 @@ class SSDDetect:
             if j >= frame_start:
                 frame_float = skimage.img_as_float(frame).astype(np.float32)
                 batch.append(frame_float)
-                if i == 29:
+                if i == 29 or num_frames - j == 1:
                     i = 0
                     boxes = self.detect(np.array(batch), conf_thresh)
                     yield batch, boxes

@@ -12,7 +12,7 @@ plt.rcParams['image.cmap'] = 'gray'
 VID_NAME = 'clapton.mkv'
 VID_PATH = os.path.expanduser('~/Videos/' + VID_NAME)
 
-FRAME = 30
+FRAME = 320
 
 f = open(VID_NAME + '_result.txt', 'r')
 lines = f.readlines()
